@@ -1,0 +1,7 @@
+BOOTSTRAP
+Se puede decargar y adjuntar en el proyecto o mediante un link
+
+cdn
+https://cdnjs.com/libraries/bootstrap
+
+o por link desde la web de bootstrap
