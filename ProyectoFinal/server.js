@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const hbs = require('hbs')
+const products = require('./data/products.json')
 
 const port = 3000;
 
@@ -12,7 +13,8 @@ app.use('/', express.static('public'));
 
 app.get('/', (req, res) => {
     res.render('index', {
-        titulo: 'Mi pagina web'
+        titulo: 'Mi pagina web',
+        products: products.products
     });
 });
 
