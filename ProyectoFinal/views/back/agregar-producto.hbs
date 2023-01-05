@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   {{> head}}
+</head>
+
+<body id="backend">
+    <h1>Agregar producto</h1>
+    <div class="container mb-4">
+        <!-- Start Top Header Bar -->
+        {{> header}}
+        <div class="agregar-producto mt-4">
+
+            <form action="/agregar" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="row">
+                            <div class="mb-3 col-12 col-md-6">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto"
+                                    name="nombre" required>
+                            </div>
+
+
+                            <div class="mb-3 col-12 col-md-6">
+                                <label for="precio" class="form-label">Precio (u$s)</label>
+                                <input type="text" class="form-control" id="precio" placeholder="$ Precio en dólares"
+                                    name="precio" required>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12" id="">
+                            <label for="imagenDeProducto" class="form-label btn btn-primary">Subir imagen</label>
+                            <div class="preview">
+                                <p>No hay imagen seleccionada para subir</p>
+                            </div>
+                            <input class="form-control" type="file" id="imagenDeProducto" name="imagenDeProducto"
+                                accept=".png,.jpg,.jpeg" required>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-8">
+                        <div class="row">
+                            <div class="mb-3 col-8">
+                                <label for="descripcion" class="form-label">Descripcion</label>
+                                <textarea class="form-control" id="descripcion" rows="6"
+                                    placeholder="Descripcion del producto" name="descripcion"></textarea>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="caracteristicas" class="form-label">Caracteristicas</label>
+                                <textarea class="form-control" id="caracteristicas" rows="6"
+                                    placeholder="Separar con coma las características"
+                                    name="caracteristicas"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <button type="submit" class="btn btn-info">Agregar</button>
+                <a href="/admin" class="btn btn-info">Volver al listado de productos</a>
+            </form>
+        </div>
+    </div>
+
+    {{> footer}}
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+
+    <script>
+        const imagenDeProducto = document.querySelector('#imagenDeProducto');
+        const preview = document.querySelector('.preview');
+
+        imagenDeProducto.style.opacity = 0;
+        imagenDeProducto.addEventListener('change', updateImageDisplay);
+
+        console.log("preview.firstChild", preview.firstChild)
+
+        function updateImageDisplay() {
+            while (preview.firstChild) {
+                preview.removeChild(preview.firstChild);
+            }
+
+            const curFiles = imagenDeProducto.files;
+            console.log("curFiles: ", curFiles)
+            if (curFiles.length === 0) {
+                const para = document.createElement('p');
+                para.textContent = 'No hay una imagen seleccionada para subir';
+                preview.appendChild(para);
+            } else {
+                const list = document.createElement('ol');
+                preview.appendChild(list);
+
+                for (const file of curFiles) {
+                    const listItem = document.createElement('li');
+                    const para = document.createElement('p');
+                    para.textContent = `Archivo ${file.name}, tamaño ${returnFileSize(file.size)}.`;
+                    const image = document.createElement('img');
+                    image.src = URL.createObjectURL(file);
+
+                    listItem.appendChild(image);
+                    listItem.appendChild(para);
+
+
+                    list.appendChild(listItem);
+                }
+            }
+        }
+
+
+        function returnFileSize(number) {
+            if (number < 1024) {
+                return number + 'bytes';
+            } else if (number >= 1024 && number < 1048576) {
+                return (number / 1024).toFixed(1) + 'KB';
+            } else if (number >= 1048576) {
+                return (number / 1048576).toFixed(1) + 'MB';
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

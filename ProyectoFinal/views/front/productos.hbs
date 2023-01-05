@@ -1,27 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-  {{> head}}
+    {{> head}}
 </head>
 
 <body>
-
-
-
-    <!-- Start Top Header Bar -->
-    {{> header}}
-
-    <!-- Banner Mi emprendimiento -->
-    <div class="px-4 py-5 text-center bg-primary bg-gradient text-light">
-        <h1 class="display-5 fw-bold ">Mi emprendimiento</h1>
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4 text-light">Descripcion corta de lo que trata el negocio</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a href="/contacto" class="btn btn-dark btn-lg px-4">Contacto</a>
-            </div>
-        </div>
-    </div>
 
     <!-- Seccion de productos -->
     <section class="products section">
@@ -33,8 +14,7 @@
                 <div class="col-md-3">
                     <div class="product-item">
                         <div class="product-thumb">
-                            <img class="img-fluid" src={{thumbnail}}
-                                alt="product-img" />
+                            <img class="img-fluid" src={{thumbnail}} alt="product-img" />
                             <div class="preview-meta">
                                 <ul>
                                     <li>
@@ -64,8 +44,7 @@
                                 <div class="row">
                                     <div class="col-md-8 col-sm-6 col-xs-12">
                                         <div class="modal-image">
-                                            <img class="img-fluid" src={{thumbnail}}
-                                                alt="product-img" />
+                                            <img class="img-fluid" src={{thumbnail}} alt="product-img" />
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -82,11 +61,12 @@
                                                 </ul> -->
                                             </div>
 
-                                            <a href="/producto-detalle/{{id}}" class="btn btn-transparent d-block mb-3">Ver detalles
+                                            <a href="/producto-detalle/{{id}}"
+                                                class="btn btn-transparent d-block mb-3">Ver
+                                                detalles
                                                 del producto</a>
 
-                                            <a href="mailto:"
-                                                class="btn btn-info mt-20">Comprar</a>
+                                            <a href="mailto:" class="btn btn-info mt-20">Comprar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -97,12 +77,11 @@
                 </div>
                 {{/each}}
 
-                
+
 
             </div>
         </div>
     </section>
-
 
 
     {{> footer}}
@@ -114,7 +93,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
+        
 </body>
-
-</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{> head}}
+</head>
+
+<body id="backend">
+    <h1>Panel de control</h1>
+    <div class="container mb-4">
+
+        <!-- Start Top Header Bar -->
+        {{> header}}
+
+        <div class="table-responsive mt-4">
+
+            <table class="table caption-top">
+                <caption>Lista de productos</caption>
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col" style="max-width: 30%">Descripcion</th>
+                        <th scope="col" style="max-width: 10%">Características</th>
+                        <th scope="col" style="max-width: 5%">Precio ($)</th>
+                        <th scope="col" style="max-width: 5%">Stock </th>
+                        <th scope="col" style="max-width: 5%">Destacado</th>
+                        <th scope="col" style="max-width: 5%">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="admin-productos">
+                    {{#each products}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{nombre}}</td>
+                        <td><img src={{rutaImagen}} alt="imagen de {{nombre}}">
+                        </td>
+                        <td class="descripcion">
+                            <div>{{descripcion}}</div>
+                        </td>
+                        <td class="caracteristicas">
+                            {{caracteristicas}}
+                            <!-- <ul>
+                                <li> i7 </li>
+                                <li> 11gen </li>
+                                <li> 256gb SSD </li>
+                                <li> 16 gb RAM </li>
+                            </ul> -->
+                        </td>
+                        <td>{{precio}} </td>
+                        <td>{{stock}} </td>
+                        <td><input type="checkbox" name="destacado" value="{{destacado}}"> </td>
+                        <td>
+                            <a href="/editar-producto/{{id}}">Editar </a><br>
+                            <a href="/borrar/{{id}}">Borrar</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+            <a href="agregar-producto.html" class="btn btn-info">Agregar producto</a>
+
+        </div>
+
+    </div><!-- /container -->
+
+    {{> footer}}
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    </script>
+
+</body>
+
+</html>

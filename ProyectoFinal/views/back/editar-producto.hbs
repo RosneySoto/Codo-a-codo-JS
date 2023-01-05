@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{> head}}
+</head>
+
+<body id="backend">
+    <h1>Editando: Lenovo X200</h1>
+    <div class="container mb-4">
+        <!-- Start Top Header Bar -->
+        {{> header}}
+
+        <div class="editar-producto mt-4">
+
+
+            <form action="/editar/1" method="post" enctype="multipart/form-data">
+                <div class="row">
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="row">
+                            <div class="mb-3 col-12 col-md-6">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" value="Lenovo X200" name="nombre"
+                                    required>
+                            </div>
+
+
+                            <div class="mb-3 col-12 col-md-6">
+                                <label for="precio" class="form-label">Precio (u$s)</label>
+                                <input type="text" class="form-control" id="precio" value="1499" name="precio"
+                                    title="Sólo números" required>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3 col-12 editar" id="imagenCargada">
+                            <label for="imagenDeProducto" class="form-label">Imagen</label>
+                            <img src="/uploads/x1_carbon_4_3.jpg-1654801811279.jpg" alt="" class="img-fluid">
+                            <input class="form-control" type="file" id="imagenDeProducto" name="imagenDeProducto"
+                                style="display:none" accept=".png,.jpg,.jpeg">
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-8">
+                        <div class="row">
+                            <div class="mb-3 col-8">
+                                <label for="descripcion" class="form-label">Descripcion</label>
+                                <textarea class="form-control" id="descripcion" rows="16"
+                                    name="descripcion">Es una lenovo requete ... CARAA! </textarea>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="caracteristicas" class="form-label">Caracteristicas</label>
+                                <textarea class="form-control" id="caracteristicas" rows="16"
+                                    placeholder="Separar con coma las características"
+                                    name="caracteristicas">i7, 11gen, 256gb SSD, 16 gb RAM</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <button type="submit" class="btn btn-info">editar</button>
+                <a href="/admin" class="btn btn-info">Volver al listado de productos</a>
+            </form>
+        </div>
+    </div>
+
+    {{> footer}}
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+
+    <script>
+        // https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
+        const contenedor = document.querySelector("#imagenCargada"),
+            elInput = document.querySelector("#imagenDeProducto");
+
+        contenedor.addEventListener("click", function (e) {
+            if (elInput) {
+                elInput.click();
+                document.querySelector("#imagenCargada img").style.display = "none";
+                elInput.style.display = "block"
+                contenedor.classList.remove("editar")
+            }
+        }, false);
+    </script>
+</body>
+
+</html>

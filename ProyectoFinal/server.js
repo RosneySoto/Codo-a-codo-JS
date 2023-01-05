@@ -4,7 +4,7 @@ const hbs = require('hbs')
 const products = require('./data/products.json')
 const path = require('path');
 
-const port = 3000;
+const port = 8080;
 
 
 app.set('view engine', 'hbs');
@@ -26,9 +26,9 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/about', (req, res) => {
-    res.render('about',{
-        titulo: "Sobre Nosotros"
+app.get('/sobre-nosotros', (req, res) => {
+    res.render('sobre-nosotros',{
+        titulo: "Quienes somos"
     });
 });
 
@@ -50,15 +50,40 @@ app.get('/detalle-producto', (req, res) => {
     });
 });
 
-app.get('/login', (req, res) => {
-    res.render('login',{
-        titulo: "Login de usuario"
+app.get('/productos', (req, res) => {
+    res.render('productos',{
+        titulo: "Productos"
     });
 });
 
 
-
 //**************** BACK ****************/
+
+app.get('/admin', (req, res) => {
+    res.render('admin', {
+        titulo: "Vista del administrador",
+        products: products.products
+    });
+});
+
+app.get('/agregar-producto', (req, res) => {
+    res.render('agregar-producto', {
+        titulo: "Agregar producto"
+    });
+});
+
+app.get('/editar-producto', (req, res) => {
+    res.render('editar-producto', {
+        titulo: "Vista del administrador"
+    });
+});
+
+app.get('/login', (req, res) => {
+    console.log('estas en el login')
+    res.render('login', {
+        titulo: "Log In"
+    });
+});
 
 app.use((req, res) => {
     res.status(404).render('404', {
