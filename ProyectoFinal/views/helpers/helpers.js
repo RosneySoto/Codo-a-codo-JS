@@ -16,3 +16,13 @@ hbs.registerHelper('dolarApeso', precio => {
     const total = dolar * precio;
     return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(total)
 });
+
+hbs.registerHelper('listado', datos => {
+    let array = datos.split(',')
+    let html = "<ul>"
+    for(item of array){ 
+        html += `<li>${item}</li>`
+    }
+
+    return `${html}</ul>`;
+})

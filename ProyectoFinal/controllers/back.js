@@ -1,10 +1,16 @@
-const products = require('../data/products.json')
+require('dotenv').config();
+const db = require('../models/connection')
 
 const adminGET = (req, res) => {
-    res.render('admin', {
-        titulo: "Vista del administrador",
-        products: products.products
-    });
+    let sql = 'SELECT * FROM productos';
+    db.query(sql, (err, data) => {
+        if(err) throw err
+        
+        res.render('admin', {
+            titulo: "Vista del administrador",
+            productos: data
+        });
+    })
 };
 
 const agregarProductoGET = (req, res) => {

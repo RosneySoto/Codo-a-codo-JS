@@ -31,7 +31,7 @@
                 </thead>
 
                 <tbody id="admin-productos">
-                    {{#each products}}
+                    {{#each productos}}
                     <tr>
                         <th scope="row">{{id}}</th>
                         <td>{{nombre}}</td>
@@ -41,13 +41,9 @@
                             <div>{{descripcion}}</div>
                         </td>
                         <td class="caracteristicas">
-                            {{caracteristicas}}
-                            <!-- <ul>
-                                <li> i7 </li>
-                                <li> 11gen </li>
-                                <li> 256gb SSD </li>
-                                <li> 16 gb RAM </li>
-                            </ul> -->
+                                {{#listado caracteristica}}
+                                    {{this}}
+                                {{/listado}}                            
                         </td>
                         <td>{{dolarApeso precio}} </td>
                         <td>{{stock}} </td>

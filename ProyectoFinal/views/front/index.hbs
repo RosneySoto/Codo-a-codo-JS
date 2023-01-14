@@ -6,9 +6,6 @@
 </head>
 
 <body>
-
-
-
     <!-- Start Top Header Bar -->
     {{> header}}
 
@@ -29,7 +26,7 @@
             <h2 class="fs-1">Productos</h2>
 
             <div class="row">
-                {{#each products}}
+                {{#each productos}}
                 <div class="col-md-3">
                     <div class="product-item">
                         <div class="product-thumb">
@@ -72,14 +69,10 @@
                                         <div class="product-short-details">
                                             <h2 class="product-title">{{nombre}}</h2>
                                             <p class="product-price">{{dolarApeso precio}}</p>
-                                            <div class="product-short-description">
-                                                {{descripcion}}
-                                                <!-- <ul>
-                                                    <li> i7 </li>
-                                                    <li> 11gen </li>
-                                                    <li> 256gb SSD </li>
-                                                    <li> 16 gb RAM </li>
-                                                </ul> -->
+                                            <div class="product-short-caracteristica">
+                                                {{#listado caracteristica}}
+                                                    {{this}}
+                                                {{/listado}} 
                                             </div>
 
                                             <a href="/producto-detalle/{{id}}" class="btn btn-transparent d-block mb-3">Ver detalles
