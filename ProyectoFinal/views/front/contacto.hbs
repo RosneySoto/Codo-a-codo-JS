@@ -17,6 +17,11 @@
 
 
                 <div class="row">
+                    {{#if mostrar}}
+                        <div class="text-center alert alert-{{clase}}" role="alert">
+                            {{mensaje}}
+                        </div>
+                    {{/if}}
                     <!-- Contact Form -->
                     <form action="/contacto" method="post" class="row mb-3 g-3 needs-validation col-md-6 mx-auto"
                         id="contact-form" novalidate>

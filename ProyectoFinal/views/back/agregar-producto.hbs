@@ -2,43 +2,61 @@
 <html lang="en">
 
 <head>
-   {{> head}}
+    {{> head}}
 </head>
 
 <body id="backend">
-    <h1>Agregar producto</h1>
+    <h1>{{titulo}}</h1>
     <div class="container mb-4">
         <!-- Start Top Header Bar -->
         {{> header}}
         <div class="agregar-producto mt-4">
-
-            <form action="/agregar" method="post" enctype="multipart/form-data">
+            {{#if mensaje}}
+                <p>{{mensaje}}
+            {{/if}}
+            <form action="/agregar-producto" method="post">
                 <div class="row">
-                    <div class="col-12 col-md-6 col-lg-4">
+                    <div class=" col-md-6 col-lg-4">
                         <div class="row">
-                            <div class="mb-3 col-12 col-md-6">
+                            <div class="mb-3  col-md-5">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto"
                                     name="nombre" required>
                             </div>
 
 
-                            <div class="mb-3 col-12 col-md-6">
+                            <div class="mb-3 col-md-3">
                                 <label for="precio" class="form-label">Precio (u$s)</label>
                                 <input type="text" class="form-control" id="precio" placeholder="$ Precio en dólares"
                                     name="precio" required>
                             </div>
+
+                            <div class="mb-3 col-md-3">
+                                <label for="stock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="stock" name="stock" required>
+                            </div>
+
+                            <div class="mb-3 col-md-1">
+                                <label for="destacado" class="form-label">D</label>
+                                <input type="text" class="form-control" id="destacado" name="destacado" required>
+                            </div>
                         </div>
 
 
-                        <div class="col-12" id="">
+                        <!--  <div class="col-12" id="">
                             <label for="imagenDeProducto" class="form-label btn btn-primary">Subir imagen</label>
                             <div class="preview">
                                 <p>No hay imagen seleccionada para subir</p>
                             </div>
                             <input class="form-control" type="file" id="imagenDeProducto" name="imagenDeProducto"
                                 accept=".png,.jpg,.jpeg" required>
+                        </div> -->
+
+                        <div class="col-12" id="">
+                            <label for="rutaImagen" class="form-label">URL imagen</label>
+                            <input class="form-control" type="text" id="rutaImagen" name="rutaImagen" required>
                         </div>
+
 
 
 
@@ -54,7 +72,7 @@
                                 <label for="caracteristicas" class="form-label">Caracteristicas</label>
                                 <textarea class="form-control" id="caracteristicas" rows="6"
                                     placeholder="Separar con coma las características"
-                                    name="caracteristicas"></textarea>
+                                    name="caracteristica"></textarea>
                             </div>
                         </div>
                     </div>

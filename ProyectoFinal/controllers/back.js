@@ -19,6 +19,23 @@ const agregarProductoGET = (req, res) => {
     });
 };
 
+const agregarProductoPOST = (req, res) => {
+
+	const info = req.body
+	const sql = "INSERT INTO productos SET ?"
+    
+	db.query(sql, info, (err, info) => {
+		if (err) throw err
+		console.log("Producto agregado")
+		res.render("agregar-producto", { 
+			mensaje: "Producto agregado",
+			titulo: "Agregar producto"
+		})
+	})
+
+
+}
+
 const editarProductoGET = (req, res) => {
     res.render('editar-producto', {
         titulo: "Vista del administrador"
@@ -34,6 +51,7 @@ const loginUsuarioGET = (req, res) => {
 module.exports = {
     adminGET,
     agregarProductoGET,
+    agregarProductoPOST,
     editarProductoGET,
     loginUsuarioGET
 }

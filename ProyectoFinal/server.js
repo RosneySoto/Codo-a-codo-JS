@@ -8,6 +8,10 @@ require('./views/helpers/helpers')
 
 const port = 8080;
 
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: false
+}));
 
 app.set('view engine', 'hbs');
 app.set('views', [
