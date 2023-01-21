@@ -1,6 +1,6 @@
 var express = require('express');
 const router = express.Router();
-const { adminGET, agregarProductoGET, editarProductoGET,loginUsuarioGET, agregarProductoPOST, editarProductoPOST, borrarProductoGET} = require('../controllers/back');
+const { adminGET, agregarProductoGET, editarProductoGET,loginUsuarioGET, agregarProductoPOST, editarProductoPOST, borrarProductoGET, loginUsuarioPOST} = require('../controllers/back');
 
 router.get('/admin', adminGET);
 
@@ -13,6 +13,7 @@ router.post('/editar-producto/:id', editarProductoPOST);
 router.get('/borrar-producto/:id', borrarProductoGET);
 
 router.get('/login', loginUsuarioGET);
+router.post('/login', loginUsuarioPOST);
 
 
 

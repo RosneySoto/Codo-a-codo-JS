@@ -2,15 +2,24 @@ require('dotenv').config();
 const db = require('../models/connection')
 
 const adminGET = (req, res) => {
-    let sql = 'SELECT * FROM productos';
-    db.query(sql, (err, data) => {
-        if(err) throw err
-        
-        res.render('admin', {
-            titulo: "Vista del administrador",
-            productos: data
-        });
-    })
+
+    const logueado = req.session.logueado
+
+    if (logueado) {
+        let sql = 'SELECT * FROM productos';
+        db.query(sql, (err, data) => {
+            if (err) throw err
+
+            res.render('admin', {
+                titulo: "Vista del administrador",
+                logueado: logueado,
+                usuario: req.session.usuario,
+                productos: data
+            });
+        })
+    } else {
+        res.redirect('/login');
+    };
 };
 
 const agregarProductoGET = (req, res) => {
@@ -88,12 +97,40 @@ const loginUsuarioGET = (req, res) => {
     });
 };
 
+const loginUsuarioPOST = (req, res) => {
+    const usuario = req.body.usuario;
+    const clave = req.body.password;
+
+    if(usuario && clave){
+        const sql = "SELECT * FROM cuentas WHERE usuario = ? AND password = ?"
+        db.query(sql, [usuario, clave], (err, data) => {
+            if(data.length > 0) {
+                req.session.logueado = true //Se crea al iniciar sesion, si no se inicia sesion no se crea
+                req.session.usuario = usuario
+                res.redirect('/admin');
+            } else {
+                res.render('login', {
+                    titulo: "Login",
+                    error: "Email de usuario o contraseña incorrecta"
+                })
+            }
+        })
+    } else {
+        res.render('login', {
+            titulo: "Login",
+            error: "Debe ingresar el Email y Password del usuario"
+        })
+    }
+
+};
+
 module.exports = {
     adminGET,
     agregarProductoGET,
     agregarProductoPOST,
     editarProductoGET,
     loginUsuarioGET,
+    loginUsuarioPOST,
     editarProductoPOST,
     borrarProductoGET
 }
