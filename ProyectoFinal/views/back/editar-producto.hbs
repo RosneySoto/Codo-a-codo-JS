@@ -6,40 +6,62 @@
 </head>
 
 <body id="backend">
-    <h1>Editando: Lenovo X200</h1>
+    <h1 style="background-color: rgb(215, 215, 85); text-align: center; padding: 10px;">Editando: {{productos.nombre}}</h1>
     <div class="container mb-4">
         <!-- Start Top Header Bar -->
         {{> header}}
 
-        <div class="editar-producto mt-4">
-
-
-            <form action="/editar/1" method="post" enctype="multipart/form-data">
+        <div class="agregar-producto mt-4">
+            {{#if mensaje}}
+                <p>{{mensaje}}
+            {{/if}}
+            <form action="/editar-producto/{{productos.idProducto}}" method="post">
                 <div class="row">
-
-                    <div class="col-12 col-md-6 col-lg-4">
+                    <div class=" col-md-6 col-lg-4">
                         <div class="row">
-                            <div class="mb-3 col-12 col-md-6">
+                            <div class="mb-3  col-md-5">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" value="Lenovo X200" name="nombre"
-                                    required>
+                                <input type="text" class="form-control" id="nombre" value="{{productos.nombre}}"
+                                    name="nombre" required>
                             </div>
 
 
-                            <div class="mb-3 col-12 col-md-6">
+                            <div class="mb-3 col-md-3">
                                 <label for="precio" class="form-label">Precio (u$s)</label>
-                                <input type="text" class="form-control" id="precio" value="1499" name="precio"
-                                    title="Sólo números" required>
+                                <input type="text" class="form-control" id="precio" value="{{productos.precio}}"
+                                    name="precio" required>
+                            </div>
+
+                            <div class="mb-3 col-md-3">
+                                <label for="stock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="stock" name="stock" value="{{productos.stock}}" required>
+                            </div>
+
+                            <div class="mb-3 col-md-3">
+                                <label for="destacado" class="form-label">Destacado</label>
+                                {{#if productos.destacado}}
+                                <input type="checkbox" class="form-check-input" id="destacado" name="destacado" value="1" checked>
+                                {{else}}
+                                <input type="checkbox" class="form-check-input" id="destacado" name="destacado" value="1">
+                                {{/if}}
                             </div>
                         </div>
 
 
-                        <div class="mb-3 col-12 editar" id="imagenCargada">
-                            <label for="imagenDeProducto" class="form-label">Imagen</label>
-                            <img src="/uploads/x1_carbon_4_3.jpg-1654801811279.jpg" alt="" class="img-fluid">
+                        <!--  <div class="col-12" id="">
+                            <label for="imagenDeProducto" class="form-label btn btn-primary">Subir imagen</label>
+                            <div class="preview">
+                                <p>No hay imagen seleccionada para subir</p>
+                            </div>
                             <input class="form-control" type="file" id="imagenDeProducto" name="imagenDeProducto"
-                                style="display:none" accept=".png,.jpg,.jpeg">
+                                accept=".png,.jpg,.jpeg" required>
+                        </div> -->
+
+                        <div class="col-12" id="">
+                            <label for="rutaImagen" class="form-label">URL imagen</label>
+                            <input class="form-control" type="text" id="rutaImagen" name="rutaImagen" value="{{productos.rutaImagen}}" required>
                         </div>
+
 
 
 
@@ -48,14 +70,11 @@
                         <div class="row">
                             <div class="mb-3 col-8">
                                 <label for="descripcion" class="form-label">Descripcion</label>
-                                <textarea class="form-control" id="descripcion" rows="16"
-                                    name="descripcion">Es una lenovo requete ... CARAA! </textarea>
+                                <textarea class="form-control" id="descripcion" rows="6" name="descripcion">{{productos.descripcion}}</textarea>
                             </div>
                             <div class="mb-3 col-4">
                                 <label for="caracteristicas" class="form-label">Caracteristicas</label>
-                                <textarea class="form-control" id="caracteristicas" rows="16"
-                                    placeholder="Separar con coma las características"
-                                    name="caracteristicas">i7, 11gen, 256gb SSD, 16 gb RAM</textarea>
+                                <textarea class="form-control" id="caracteristicas" rows="6" name="caracteristica">{{productos.caracteristica}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -64,8 +83,8 @@
 
 
 
-                <button type="submit" class="btn btn-info">editar</button>
-                <a href="/admin" class="btn btn-info">Volver al listado de productos</a>
+                <button type="submit" class="btn btn-info">Guardar</button>
+                <a href="admin.hbs" class="btn btn-info">Volver al listado de productos</a>
             </form>
         </div>
     </div>
