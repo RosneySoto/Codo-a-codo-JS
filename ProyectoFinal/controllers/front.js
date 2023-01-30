@@ -40,7 +40,6 @@ const detalleProductoGET = (req, res) => {
 };
 
 const productosGET = (req, res) => {
-    
     const sql = "SELECT * FROM productos";
     db.query(sql, (err, data) => {
         if(err) throw err

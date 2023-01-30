@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{{> head}}
+	<style>
+		.error {
+			background: red;
+			color: white;
+			padding: 10px;
+			display: none
+		}
+	</style>
+</head>
+
+<body class="signIn">
+
+
+	<main class="form-signin">
+		{{#if mensaje}}
+                <div class="alert alert-success" role="alert"> {{mensaje}} </div>
+		{{/if}}
+
+		<form action="/registro" method="post">
+
+			<h1 class="h3 mb-5 mt-5 text-center">Registro de Usuario</h1>
+
+			<div class="form-floating">
+				<input type="email" class="form-control" id="usuario" placeholder="name@example.com" name="usuario" required>
+				<label for="usuario">Usuario</label>
+			</div>
+			<div class="form-floating">
+				<input type="password" class="form-control" id="password" placeholder="Contraseña" name="password" required>
+				<label for="password">Contraseña</label>
+			</div>
+
+
+			<button class="w-50 btn btn-lg btn-info" type="submit">Guardar</button>
+		</form>
+
+		<a href="/login">Ya estoy registrado</a>
+
+	</main>
+
+</body>
+
+</html>

@@ -124,6 +124,35 @@ const loginUsuarioPOST = (req, res) => {
 
 };
 
+const registroUsuarioGET = (req, res) => {
+    res.render('registro', {
+        titulo: "Sign In"
+    });
+};
+
+const registroUsuarioPOST = (req, res) => {
+
+    const info = req.body;
+
+    if (info == "") {
+        res.render('registro', {
+            titulo: "Sign In",
+            error: "Debe ingresar un usuario y constraseña"
+        });
+
+    } else {
+        const sql = "INSERT INTO cuentas SET ?"
+        db.query(sql, info, (err, info) => {
+            if (err) throw err
+            console.log("Cuenta creada")
+            res.render("registro", {
+                mensaje: "Cuenta Creada",
+                titulo: "Sign In"
+            });
+        });
+    };
+};
+
 module.exports = {
     adminGET,
     agregarProductoGET,
@@ -132,5 +161,7 @@ module.exports = {
     loginUsuarioGET,
     loginUsuarioPOST,
     editarProductoPOST,
-    borrarProductoGET
+    borrarProductoGET,
+    registroUsuarioGET,
+    registroUsuarioPOST
 }
