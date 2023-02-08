@@ -1,5 +1,6 @@
 require('dotenv').config();
 const db = require('../models/connection');
+const bcrypt = require('bcrypt');
 
 const adminGET = (req, res) => {
 
@@ -61,27 +62,58 @@ const registroUsuarioGET = (req, res) => {
     });
 };
 
+///////// CODIGO FUNCIONAL ////////////////////
+// const registroUsuarioPOST = (req, res) => {
+
+//     const info = req.body;
+
+//     if (info.length < 0) {
+//         res.render('registro', {
+//             titulo: "Sign In",
+//             error: "Debe ingresar un usuario y constraseña"
+//         });
+
+//     } else {
+//         const sql = "INSERT INTO cuentas SET ?"
+//         db.query(sql, info, (err, info) => {
+//             if (err) throw err
+//             console.log("Cuenta creada")
+//             res.render("registro", {
+//                 mensaje: "Cuenta Creada",
+//                 titulo: "Sign In"
+//             });
+//         });
+//     };
+// };
+
 const registroUsuarioPOST = (req, res) => {
 
-    const info = req.body;
+    const usuario = req.body;
 
-    if (info.length < 0) {
-        res.render('registro', {
-            titulo: "Sign In",
-            error: "Debe ingresar un usuario y constraseña"
-        });
+    const sqlFindUser = `SELECT * FROM cuentas WHERE usuario = ?`;
+    const insertUsuario = `INSERT INTO cuentas SET ?`;
 
-    } else {
-        const sql = "INSERT INTO cuentas SET ?"
-        db.query(sql, info, (err, info) => {
-            if (err) throw err
-            console.log("Cuenta creada")
-            res.render("registro", {
-                mensaje: "Cuenta Creada",
-                titulo: "Sign In"
+    db.query(sqlFindUser, usuario, (err, data) => {
+        if (data != "") {
+            // console.log(`ERROR: ${err}`)
+            res.send('ERROR, EL USUARIO YA EXISTE')
+        } else {
+            const passwordHash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+            const usuarioHash = {
+                usuario: req.body.usuario,
+                password: passwordHash
+            };
+            
+            db.query(insertUsuario, usuarioHash, (err, usuarioHash) => {
+                if (err) throw err
+                console.log("Cuenta creada")
+                res.render("registro", {
+                    mensaje: "Cuenta Creada",
+                    titulo: "Sign In"
+                });
             });
-        });
-    };
+        };
+    });            
 };
 
 module.exports = {
