@@ -3,6 +3,7 @@
 
 <head>
 	{{> head}}
+	<script src="https://kit.fontawesome.com/b1eb47ecfa.js" crossorigin="anonymous"></script>
 	<style>
 		.error {
 			background: red;
@@ -16,30 +17,30 @@
 <body class="login">
 
 
-	<main class="form-signin">
+	<div class="w-50 d-flex justify-content-center position-relative position-absolute top-50 start-50 translate-middle form-signin">
 		{{#if error}}
-			<div class="alert alert-danger mb-3" role="alert"> {{error}} </div>
+			<div class="alert alert-danger mb-3 d-flex justify-content-center position-relative position-absolute top-10 start-50 translate-middle" role="alert"> {{error}} </div>
 		{{/if}}
 		<form action="login" method="post">
 
 			<h1 class="h3 mb-5 mt-5 text-center">Acceso al panel de control</h1>
 
-			<div class="form-floating">
+			<div class="form-floating mb-2">
 				<input type="email" class="form-control" id="usuario" placeholder="name@example.com" name="usuario">
 				<label for="usuario">Usuario</label>
 			</div>
-			<div class="form-floating">
+			<div class="form-floating mb-2 mt-2">
 				<input type="password" class="form-control" id="password" placeholder="Contraseña" name="password">
 				<label for="password">Contraseña</label>
 			</div>
 
 
 			<button class="w-100 btn btn-lg btn-info" type="submit">Entrar</button>
+			<a class="d-flex justify-content-center mt-3" href="/registro">Quiero registrarme</a>
 		</form>
 
-		<a href="/registro">Quiero registrarme</a>
 
-	</main>
+	</div>
 
 </body>
 

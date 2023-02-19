@@ -1,11 +1,10 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const storeUsuarios = require('../src/usuario/storeUsuario');
-const ModelUser = require('../src/usuario/model');
-const ContenedorOrdenes = require('../src/orden/storeOrden');
+const db = require('../models/connection');
 
 passport.use('autenticacion', new LocalStrategy( async (username, password, callback) => {
+    const sql = "SELECT * FROM cuentas WHERE = ?"
     const users = storeUsuarios.getUsers();
     const user = await users.findOne({username: username});
     if(!user) return callback(new Error('USUARIO NO REGISTRADO'));

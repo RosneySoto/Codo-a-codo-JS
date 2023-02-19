@@ -6,16 +6,19 @@
 </head>
 
 <body id="backend">
-    <h1>Panel de control</h1>
+    <h1 style="text-align: center; background-color: rgb(123, 188, 222); padding-top: 10px; padding-bottom: 20px;">Panel de control</h1>
     <div class="container mb-4">
-
         <!-- Start Top Header Bar -->
         {{> header}}
 
         <div class="table-responsive mt-4">
 
+            <a href="agregar-producto" class="btn btn-info">Agregar producto</a>
+
             <table class="table caption-top">
-                <caption>Lista de productos</caption>
+                <caption style="text-align: center;">
+                    <h5>Lista de Productos</h5>
+                </caption>
                 <thead class="table-light">
                     <tr>
                         <th scope="col">#ID</th>
@@ -35,7 +38,7 @@
                     <tr>
                         <th scope="row">{{id}}</th>
                         <td>{{nombre}}</td>
-                        <td><img src={{rutaImagen}} alt="imagen de {{nombre}}">
+                        <td><img src={{rutaImagen}} alt="imagen de {{nombre}}" width="300px" height="200px">
                         </td>
                         <td class="descripcion">
                             <div>{{descripcion}}</div>
@@ -62,7 +65,7 @@
                 </tbody>
 
             </table>
-            <a href="agregar-producto" class="btn btn-info">Agregar producto</a>
+            
 
         </div>
 

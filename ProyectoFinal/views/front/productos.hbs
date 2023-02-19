@@ -8,7 +8,7 @@
     <!-- Seccion de productos -->
     <section class="products section">
         <div class="container my-5 text-center">
-            <h2 class="fs-1">Productos</h2>
+            <h2 class="fs-1 mb-5">Productos</h2>
 
             <div class="row">
                 {{#each productos}}
@@ -17,7 +17,7 @@
                         <div class="product-thumb">
                             <img class="img-fluid" src={{rutaImagen}} alt="product-img" />
                             <div class="preview-meta">
-                                <ul>
+                                <ul style="list-style: none;">
                                     <li>
                                         <span data-bs-toggle="modal" data-bs-target="#product-modal-{{id}}">
                                             <i class="bi bi-search"></i>

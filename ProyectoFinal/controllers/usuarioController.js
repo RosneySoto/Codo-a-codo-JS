@@ -88,13 +88,13 @@ const registroUsuarioGET = (req, res) => {
 
 const registroUsuarioPOST = (req, res) => {
 
-    const usuario = req.body;
+    const usuario = req.body.usuario;
 
-    const sqlFindUser = `SELECT * FROM cuentas WHERE usuario = ?`;
-    const insertUsuario = `INSERT INTO cuentas SET ?`;
+    const sqlFindUser = "SELECT * FROM cuentas WHERE usuario = ?";
+    const insertUsuario = "INSERT INTO cuentas SET ?";
 
-    db.query(sqlFindUser, usuario, (err, data) => {
-        if (data != "") {
+    db.query(sqlFindUser, usuario, (err, usuario) => {
+        if (usuario.length > 0) {
             // console.log(`ERROR: ${err}`)
             res.send('ERROR, EL USUARIO YA EXISTE')
         } else {

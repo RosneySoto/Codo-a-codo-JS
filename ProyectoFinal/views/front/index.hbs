@@ -11,9 +11,9 @@
 
     <!-- Banner Mi emprendimiento -->
     <div class="px-4 py-5 text-center bg-primary bg-gradient text-light">
-        <h1 class="display-5 fw-bold ">Mi emprendimiento</h1>
+        <h1 class="display-5 fw-bold ">Mi primer Ecommerce</h1>
         <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4 text-light">Descripcion corta de lo que trata el negocio</p>
+            <p class="lead mb-4 text-light">¡Hola, bienvenido a mi primer proyecto funcional en programacion, usando nodejs y mysql espero te guste!</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                 <a href="/contacto" class="btn btn-dark btn-lg px-4">Contacto</a>
             </div>
@@ -23,7 +23,7 @@
     <!-- Seccion de productos -->
     <section class="products section">
         <div class="container my-5 text-center">
-            <h2 class="fs-1">Productos Destacados</h2>
+            <h2 class="fs-1 mb-5">Productos Destacados</h2>
 
             <div class="row">
                 {{#each productos}}
@@ -33,7 +33,7 @@
                             <img class="img-fluid" src={{rutaImagen}}
                                 alt="product-img" />
                             <div class="preview-meta">
-                                <ul>
+                                <ul style="list-style: none;">
                                     <li>
                                         <span data-bs-toggle="modal" data-bs-target="#product-modal-{{id}}">
                                             <i class="bi bi-search"></i>

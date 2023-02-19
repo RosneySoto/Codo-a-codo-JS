@@ -6,14 +6,16 @@
 </head>
 
 <body id="backend">
-    <h1>{{titulo}}</h1>
+    <h1 style="text-align: center; background-color: rgb(123, 188, 222); padding-top: 10px; padding-bottom: 20px;">{{titulo}}</h1>
     <div class="container mb-4">
         <!-- Start Top Header Bar -->
         {{> header}}
         <div class="agregar-producto mt-4">
-            {{#if mensaje}}
-                <p>{{mensaje}}
-            {{/if}}
+            <div class="alert alert-success" role="alert">
+                {{#if mensaje}}
+                    <p>{{mensaje}}
+                {{/if}}
+            </div>
             <form action="/agregar-producto" method="post">
                 <div class="row">
                     <div class=" col-md-6 col-lg-4">
@@ -43,16 +45,6 @@
                         </div>
 
 
-                        <div class="col-12" id="">
-                            <label for="rutaImagen" class="form-label btn btn-primary">Subir imagen</label>
-
-                            <div class="preview">
-                                <p>No hay imagen seleccionada para subir</p>
-                            </div>
-                            
-                            <input class="form-control" type="file" id="rutaImagen" name="rutaImagen"
-                                accept=".png, .jpg, .jpeg" required>
-                        </div>
 
                         <div class="col-12" id="">
                             <label for="rutaImagen" class="form-label">URL imagen</label>
@@ -83,8 +75,8 @@
 
 
 
-                <button type="submit" class="btn btn-info">Agregar</button>
-                <a href="/admin" class="btn btn-info">Volver al listado de productos</a>
+                <button type="submit" class="btn btn-info mt-3">Agregar</button>
+                <a href="/admin" class="btn btn-info mt-3">Volver al listado de productos</a>
             </form>
         </div>
     </div>
