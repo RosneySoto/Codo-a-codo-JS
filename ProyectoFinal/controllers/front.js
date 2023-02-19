@@ -33,12 +33,6 @@ const contactoGET = (req, res) => {
     });
 };
 
-const detalleProductoGET = (req, res) => {
-    res.render('detalle-producto',{
-        titulo: "Producto"
-    });
-};
-
 const productosGET = (req, res) => {
     const sql = "SELECT * FROM productos";
     db.query(sql, (err, data) => {
@@ -97,7 +91,6 @@ module.exports = {
     sobreNosotrosGET,
     comoComproGET,
     contactoGET,
-    detalleProductoGET,
     productosGET,
     contactoPOST
 };
