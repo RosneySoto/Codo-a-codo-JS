@@ -5,9 +5,10 @@ const path = require('path');
 const session = require('express-session')
 const routesFront = require('./routes/front');
 const routesBack = require('./routes/back');
-require('./views/helpers/helpers')
+require('./views/helpers/helpers');
+const {PORT} = require('./config');
 
-const port = 8080;
+const port = PORT;
 
 //Sesiones mediante cookies
 app.use(session({
