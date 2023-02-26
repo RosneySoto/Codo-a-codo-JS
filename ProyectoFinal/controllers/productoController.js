@@ -1,5 +1,6 @@
 require('dotenv').config();
-const db = require('../models/connection')
+const db = require('../models/connection');
+const modelProducto = require('../models/productoDB');
 
 const agregarProductoGET = (req, res) => {
     res.render('agregar-producto', {
@@ -9,20 +10,29 @@ const agregarProductoGET = (req, res) => {
 
 const agregarProductoPOST = (req, res) => {
 
-	const info = req.body
-	const sql = "INSERT INTO productos SET ?"
+	const data = req.body
+
+    try {
+        if(data){
+            const nuevoProducto = new modelProducto(data);
+            nuevoProducto.save();
+            res.render("agregar-producto", { 
+                mensaje: "Producto agregado",
+                titulo: "Agregar producto"
+            });
+        }else {
+            res.render("agregar-producto", { 
+                mensaje: "No puede haber campos vacios",
+                titulo: "Agregar producto"
+            });
+        }
+            
+    } catch (error) {
+        console.log('****** ERROR AL AGREGAR EL PRODUCTO ******')
+        throw new Error(error)
+    }
     
-	db.query(sql, info, (err, info) => {
-		if (err) throw err
-		console.log("Producto agregado")
-		res.render("agregar-producto", { 
-			mensaje: "Producto agregado",
-			titulo: "Agregar producto"
-		})
-	})
-
-
-}
+};
 
 const editarProductoGET = (req, res) => {
     const id = req.params.id

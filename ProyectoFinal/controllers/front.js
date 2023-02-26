@@ -1,18 +1,14 @@
 require('dotenv').config();
 const db = require('../models/connection');
 const nodemailer = require('nodemailer');
+const modelProducto = require('../models/productoDB');
 
-const indexGET = (req, res) => {
-
-    let sql = 'SELECT * FROM productos WHERE destacado = 1';
-    db.query(sql, (err, data) => {
-        if(err) throw err
-
-        res.render('index', {
-            titulo: 'Mi pagina web',
-            productos: data 
-        })
-    })
+const indexGET = async (req, res) => {
+    const products  = await modelProducto.findAll();
+    res.render('index', {
+        titulo: 'Mi pagina web',
+        productos: products 
+    });
 };
 
 const sobreNosotrosGET = (req, res) => {
@@ -33,15 +29,12 @@ const contactoGET = (req, res) => {
     });
 };
 
-const productosGET = (req, res) => {
-    const sql = "SELECT * FROM productos";
-    db.query(sql, (err, data) => {
-        if(err) throw err
-        
-        res.render('productos',{
-            titulo: "Productos",
-            productos: data
-        });
+const productosGET = async (req, res) => {
+
+    const allProductos  = await modelProducto.findAll();
+    res.render('productos', {
+        titulo: 'Mi pagina web',
+        productos: allProductos 
     });
 };
 
@@ -62,10 +55,12 @@ const contactoPOST = (req, res) => {
       const mailOptions = {
         from: info.email,
         to: 'rosney.soto@gmail.com',
-        subject: 'info.asunto',
+        subject: 'Info Ecommerce',
         text: `
-            <h1>${info.nombre}</h1>
-            <p>${info.mensaje}</p>
+            ${info.asunto}
+            ${info.nombre}
+            ${info.email}
+            ${info.mensaje}
         `
       };
 
