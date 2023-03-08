@@ -37,22 +37,38 @@ const agregarProductoPOST = (req, res) => {
 const editarProductoGET = (req, res) => {
     const id = req.params.id
     const data = req.body
-    const sql = " SELECT * FROM productos WHERE idProducto = ?";
-    db.query(sql, id, (err, data) => {
-        if(err) throw err
-        if(data.length > 0){
-            res.render('editar-producto', {
-                titulo: "Vista del administrador",
-                productos: data[0]
-            });
-        } else {
-            console.log('ID no encontrado')
-            res.send(`
-                <h1>No existe el producto con id ${id}</h1>
-                <a href="/admin"> Ver listado de productos</a>
-            `)
-        };
-    });
+
+    const productoEditado = modelProducto.update({
+        nombre: data.nombre,
+        descripcion: data.descripcion,
+        caracteristica: data.caracteristica,
+        precio: data.precio,
+        stock: data.stock,
+        rutaImagen: data.rutaImagen,
+        destacado: data.destacado
+        }, {
+            where: {
+                id: data.id
+            }
+        })
+    productoEditado.save();
+
+    // const sql = " SELECT * FROM productos WHERE idProducto = ?";
+    // db.query(sql, id, (err, data) => {
+    //     if(err) throw err
+    //     if(data.length > 0){
+    //         res.render('editar-producto', {
+    //             titulo: "Vista del administrador",
+    //             productos: data[0]
+    //         });
+    //     } else {
+    //         console.log('ID no encontrado')
+    //         res.send(`
+    //             <h1>No existe el producto con id ${id}</h1>
+    //             <a href="/admin"> Ver listado de productos</a>
+    //         `)
+    //     };
+    // });
 };
 
 const editarProductoPOST = (req, res) => {

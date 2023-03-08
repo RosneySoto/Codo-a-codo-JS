@@ -2,11 +2,13 @@ require('dotenv').config();
 const db = require('../models/connection');
 const bcrypt = require('bcrypt');
 
-const adminGET = (req, res) => {
+const adminGET = async (req, res) => {
 
     const logueado = req.session.logueado
 
     if (logueado) {
+
+
         let sql = 'SELECT * FROM productos';
         db.query(sql, (err, data) => {
             if (err) throw err

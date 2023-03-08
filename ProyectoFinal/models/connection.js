@@ -20,7 +20,7 @@ const { dataBase, database } = require('../config');
 //   dataBase.password, {
 //     host: dataBase.host,
 //     dialect: 'mysql',
-//     port: dataBase.port
+//     // port: dataBase.port
 //   }
 // );
 
