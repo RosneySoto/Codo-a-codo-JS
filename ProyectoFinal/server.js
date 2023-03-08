@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const hbs = require('hbs')
 const path = require('path');
-const session = require('express-session')
+const session = require('express-session');
+const MemoryStore = require('memorystore')(session)
 const routesFront = require('./routes/front');
 const routesBack = require('./routes/back');
 require('./views/helpers/helpers');
@@ -15,7 +16,12 @@ app.use(session({
     secret: 'jose',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 300000 } // 5 minutos
+    cookie: { maxAge: 300000 },
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+      }),
+      resave: false,
+      secret: 'keyboard cat' // 5 minutos
 }));
 
 app.use(express.json());
