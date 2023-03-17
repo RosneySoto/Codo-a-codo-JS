@@ -1,28 +1,23 @@
 require('dotenv').config();
 const db = require('../models/connection');
 const bcrypt = require('bcrypt');
+const {Cuentas, Productos} = require('../models/productoDB');
 
 const adminGET = async (req, res) => {
 
-    const logueado = req.session.logueado
+    const logueado = req.session.logueado;
 
-    if (logueado) {
-
-
-        let sql = 'SELECT * FROM productos';
-        db.query(sql, (err, data) => {
-            if (err) throw err
-
+        if(logueado){
+            const listaProdutos = await Productos.findAll();
             res.render('admin', {
-                titulo: "Vista del administrador",
+                titulo: "Vista del Administrador",
                 logueado: logueado,
                 usuario: req.session.usuario,
-                productos: data
-            });
-        })
-    } else {
-        res.redirect('/login');
-    };
+                productos: listaProdutos
+            })
+        } else {
+            res.redirect('/login')
+        };
 };
 
 const loginUsuarioGET = (req, res) => {
@@ -31,31 +26,29 @@ const loginUsuarioGET = (req, res) => {
     });
 };
 
-const loginUsuarioPOST = (req, res) => {
+const loginUsuarioPOST = async (req, res) => {
     const usuario = req.body.usuario;
     const clave = req.body.password;
 
-    if(usuario && clave){
-        const sql = "SELECT * FROM cuentas WHERE usuario = ? AND password = ?"
-        db.query(sql, [usuario, clave], (err, data) => {
-            if(data.length > 0) {
-                req.session.logueado = true //Se crea al iniciar sesion, si no se inicia sesion no se crea
-                req.session.usuario = usuario
-                res.redirect('/admin');
-            } else {
-                res.render('login', {
-                    titulo: "Login",
-                    error: "Email de usuario o contraseña incorrecta"
-                })
-            }
-        })
+    const usuarioValidado = await Cuentas.findOne({ where: {usuario: usuario, password: clave} });
+
+    if( usuario || clave ){
+        if( usuarioValidado ){
+            req.session.logueado = true; //Se crea al iniciar sesion, si no se inicia sesion no se crea.
+            req.session.usuario = usuario;
+            res.redirect('/admin');
+        } else {
+            res.render('login', {
+                titulo: "Login",
+                error: "Email de usuario o contraseña incorrecta"
+            })
+        };
     } else {
         res.render('login', {
             titulo: "Login",
-            error: "Debe ingresar el Email y Password del usuario"
-        })
-    }
-
+            error: "Debe ingresar su usuario y password"
+        });
+    };
 };
 
 const registroUsuarioGET = (req, res) => {
@@ -88,34 +81,53 @@ const registroUsuarioGET = (req, res) => {
 //     };
 // };
 
-const registroUsuarioPOST = (req, res) => {
+const registroUsuarioPOST = async (req, res) => {
 
     const usuario = req.body.usuario;
+    const clave = req.body.password;
 
-    const sqlFindUser = "SELECT * FROM cuentas WHERE usuario = ?";
-    const insertUsuario = "INSERT INTO cuentas SET ?";
+    const usuarioExiste = await Cuentas.findOne({ where: { usuario: usuario}});
 
-    db.query(sqlFindUser, usuario, (err, usuario) => {
-        if (usuario.length > 0) {
-            // console.log(`ERROR: ${err}`)
-            res.send('ERROR, EL USUARIO YA EXISTE')
+    try {
+        if( usuarioExiste ){
+            res.send('ERROR EL USUARIO EXISTE')
         } else {
-            const passwordHash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-            const usuarioHash = {
-                usuario: req.body.usuario,
-                password: passwordHash
-            };
-            
-            db.query(insertUsuario, usuarioHash, (err, usuarioHash) => {
-                if (err) throw err
-                console.log("Cuenta creada")
-                res.render("registro", {
-                    mensaje: "Cuenta Creada",
-                    titulo: "Sign In"
-                });
+            const nuevoUsuario = await Cuentas.create({usuario: usuario, password: clave})
+            console.log(nuevoUsuario);
+            res.render('registro', {
+                mensaje: 'Cuenta Creada',
+                titulo: 'Sign In'
             });
         };
-    });            
+    } catch (error) {
+        console.log('[ERROR]' + error)
+    }
+
+    ///// REVISAR AQUI EL CODIGO PARA ENCRIPTAR ////////////////////////////////////////////////////////////
+    // const sqlFindUser = "SELECT * FROM cuentas WHERE usuario = ?";
+    // const insertUsuario = "INSERT INTO cuentas SET ?";
+
+    // db.query(sqlFindUser, usuario, (err, usuario) => {
+    //     if (usuario.length > 0) {
+    //         // console.log(`ERROR: ${err}`)
+    //         res.send('ERROR, EL USUARIO YA EXISTE')
+    //     } else {
+    //         const passwordHash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    //         const usuarioHash = {
+    //             usuario: req.body.usuario,
+    //             password: passwordHash
+    //         };
+            
+    //         db.query(insertUsuario, usuarioHash, (err, usuarioHash) => {
+    //             if (err) throw err
+    //             console.log("Cuenta creada")
+    //             res.render("registro", {
+    //                 mensaje: "Cuenta Creada",
+    //                 titulo: "Sign In"
+    //             });
+    //         });
+    //     };
+    // });            
 };
 
 module.exports = {

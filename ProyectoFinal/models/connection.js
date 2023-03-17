@@ -1,7 +1,11 @@
-const mysql = require('mysql2');
+const dotenv = require('dotenv');
+dotenv.config()
+// const mysql = require('mysql2');
 const { Sequelize } = require('sequelize');
-const { dataBase, database } = require('../config');
+// const { dataBase, database } = require('../config');
 
+
+//////// CONEXION CON MYSQL //////////////
 // const connection = mysql.createConnection({
 //   host: process.env.DB_HOST,
 //   user: process.env.DB_USER,
@@ -14,13 +18,16 @@ const { dataBase, database } = require('../config');
 
 // module.exports = connection;
 
+
+//////// CONEXION CON SEQUELIZE //////////////
 // const sequelize = new Sequelize(
 //   dataBase.database,
 //   dataBase.username,
 //   dataBase.password, {
 //     host: dataBase.host,
 //     dialect: 'mysql',
-//     // port: dataBase.port
+//     port: dataBase.port,
+//     logging: true
 //   }
 // );
 

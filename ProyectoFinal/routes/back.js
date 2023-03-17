@@ -10,9 +10,9 @@ router.get('/agregar-producto', agregarProductoGET);
 router.post('/agregar-producto', agregarProductoPOST);
 
 router.get('/editar-producto/:id', editarProductoGET);
-router.post('/editar-producto/:id', editarProductoPOST);
+router.put('/editar-producto/:id', editarProductoPOST);
 
-router.get('/borrar-producto/:id', borrarProductoGET);
+router.delete('/borrar-producto/:id', borrarProductoGET);
 
 router.get('/login', loginUsuarioGET);
 router.post('/login', loginUsuarioPOST);

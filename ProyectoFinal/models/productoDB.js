@@ -35,13 +35,13 @@ Productos.init({
 }, {
     sequelize,
     modelName: 'productos',
-    // timestamps: false,
+    timestamps: false,
 });
 
 
-class Cuenta extends Model {};
+class Cuentas extends Model {};
 
-Cuenta.init({
+Cuentas.init({
     usuario: {
         type: DataTypes.STRING(60),
         allowNull: false
@@ -53,10 +53,10 @@ Cuenta.init({
 }, {
     sequelize,
     modelName: 'cuentas',
-    // timestamps: true,
+    timestamps: true,
 });
 
 module.exports = {
     Productos,
-    Cuenta
+    Cuentas
 };

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const db = require('../models/connection');
-const modelProducto = require('../models/productoDB');
+const {Cuentas, Productos} = require('../models/productoDB');
 
 const agregarProductoGET = (req, res) => {
     res.render('agregar-producto', {
@@ -8,92 +8,87 @@ const agregarProductoGET = (req, res) => {
     });
 };
 
-const agregarProductoPOST = (req, res) => {
-
-	const data = req.body
+const agregarProductoPOST = async (req, res) => {
 
     try {
-        if(data){
-            const nuevoProducto = new modelProducto(data);
-            nuevoProducto.save();
-            res.render("agregar-producto", { 
-                mensaje: "Producto agregado",
-                titulo: "Agregar producto"
-            });
-        }else {
-            res.render("agregar-producto", { 
-                mensaje: "No puede haber campos vacios",
-                titulo: "Agregar producto"
-            });
-        }
-            
-    } catch (error) {
-        console.log('****** ERROR AL AGREGAR EL PRODUCTO ******')
-        throw new Error(error)
-    }
-    
-};
-
-const editarProductoGET = (req, res) => {
-    const id = req.params.id
-    const data = req.body
-
-    const productoEditado = modelProducto.update({
-        nombre: data.nombre,
-        descripcion: data.descripcion,
-        caracteristica: data.caracteristica,
-        precio: data.precio,
-        stock: data.stock,
-        rutaImagen: data.rutaImagen,
-        destacado: data.destacado
-        }, {
-            where: {
-                id: data.id
-            }
+        const nuevoProducto = await Productos.create({
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            caracteristica: req.body.caracteristica,
+            precio: req.body.precio,
+            stock: req.body.stock,
+            rutaImagen: req.body.rutaImagen,
+            destacado: req.body.destacado
         })
-    productoEditado.save();
-
-    // const sql = " SELECT * FROM productos WHERE idProducto = ?";
-    // db.query(sql, id, (err, data) => {
-    //     if(err) throw err
-    //     if(data.length > 0){
-    //         res.render('editar-producto', {
-    //             titulo: "Vista del administrador",
-    //             productos: data[0]
-    //         });
-    //     } else {
-    //         console.log('ID no encontrado')
-    //         res.send(`
-    //             <h1>No existe el producto con id ${id}</h1>
-    //             <a href="/admin"> Ver listado de productos</a>
-    //         `)
-    //     };
-    // });
+        console.log(nuevoProducto);
+        res.render("agregar-producto", { 
+            mensaje: "Producto agregado",
+            titulo: "Agregar producto"
+        });
+    } catch (error) {
+        console.log('[ERROR]' + error);
+    };    
 };
 
-const editarProductoPOST = (req, res) => {
-    const id = req.params.id;
+const editarProductoGET = async (req, res) => {
+    const idProducto = req.params.id
+
+    try {
+        const productoFind = await Productos.findOne({ where: {id: idProducto} })
+
+        if( !productoFind ) {
+            res.send(`
+                <h1>No existe el producto con id ${idProducto}</h1>
+                <a href="/admin"> Ver listado de productos</a>
+            `)
+        } else {
+            // res.send(productoFind)
+            res.render('editar-producto', {
+                titulo: "Vista del administrador",
+                productos: productoFind
+            });    
+        };
+    } catch (error) {
+        console.log(error)
+    };
+};
+
+const editarProductoPOST = async (req, res) => {
+    const idProducto = req.params.id;
     const producto = req.body;
-    console.log(producto);
-    const sql = "UPDATE productos SET ? WHERE idProducto = ?";
-
-    db.query(sql, [producto, id], (err, data) => {
-        if(err) throw err
-        console.log(data);
-        console.log(`${data.affectedRows} Registro Actualizado`);
+    
+    try {
+        const nuevoProducto = await Productos.update({
+            nombre: producto.nombre,
+            descripcion: producto.descripcion,
+            caracteristica: producto.caracteristica,
+            precio: producto.precio,
+            stock: producto.stock,
+            rutaImagen: producto.rutaImagen,
+            destacado: producto.destacado
+        }, 
+        {
+            where: { id: idProducto }
+        })
+        console.log('SE MODIFICO CORRECTAMENTE')
+        // console.log(nuevoProducto);
         res.redirect('/admin');
-    });
+    } catch (error) {
+        console.log('[ERROR]' + error);
+    };
 };
 
-const borrarProductoGET = (req, res) => {
-    const id = req.params.id
+const borrarProductoGET = async (req, res) => {
+    const idProducto = req.params.id
 
-    const sql = "DELETE FROM productos WHERE idProducto = ?";
-    db.query(sql, id, (err, data) => {
-        if(err) throw err
-        console.log(data.affectedRows + "Registro borrado")
-        res.redirect('/admin');
+    const productoDelete = await Productos.destroy({
+        where: {
+            id: idProducto
+        }
     });
+    console.log('PRODUCTO ELIMINADO');
+    // res.send('Producto eliminado')
+    res.redirect('/admin');
 };
 
 

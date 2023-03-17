@@ -1,4 +1,4 @@
-// const { DataTypes, Model } = require('sequelize');
+// const { Sequelize, DataTypes, Model } = require('sequelize');
 // const sequelize = require('./connection');
 
 // class Cuenta extends Model {};

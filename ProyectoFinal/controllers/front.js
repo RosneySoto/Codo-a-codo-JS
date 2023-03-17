@@ -1,10 +1,10 @@
 require('dotenv').config();
 const db = require('../models/connection');
 const nodemailer = require('nodemailer');
-const modelProducto = require('../models/productoDB');
+const {Cuentas, Productos} = require('../models/productoDB');
 
 const indexGET = async (req, res) => {
-    const products  = await modelProducto.findAll();
+    const products  = await Productos.findAll();
     res.render('index', {
         titulo: 'Mi pagina web',
         productos: products 
