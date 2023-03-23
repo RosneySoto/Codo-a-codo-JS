@@ -2,7 +2,8 @@ var express = require('express');
 const router = express.Router();
 const { agregarProductoGET, editarProductoGET, agregarProductoPOST, editarProductoPOST, borrarProductoGET } = require('../controllers/productoController');
 
-const { adminGET, loginUsuarioGET, loginUsuarioPOST, registroUsuarioGET, registroUsuarioPOST } = require('../controllers/usuarioController')
+const { adminGET, loginUsuarioGET, loginUsuarioPOST, registroUsuarioGET, registroUsuarioPOST } = require('../controllers/usuarioController');
+const passport = require('../middleware/passport');
 
 router.get('/admin', adminGET);
 
