@@ -1,5 +1,6 @@
 require('dotenv').config();
-const db = require('../models/connection')
+const db = require('../models/connection');
+const {Cuentas, Productos} = require('../models/productoDB');
 
 const agregarProductoGET = (req, res) => {
     res.render('agregar-producto', {
@@ -7,67 +8,90 @@ const agregarProductoGET = (req, res) => {
     });
 };
 
-const agregarProductoPOST = (req, res) => {
+const agregarProductoPOST = async (req, res) => {
 
-	const info = req.body
-	const sql = "INSERT INTO productos SET ?"
-    
-	db.query(sql, info, (err, info) => {
-		if (err) throw err
-		console.log("Producto agregado")
-		res.render("agregar-producto", { 
-			mensaje: "Producto agregado",
-			titulo: "Agregar producto"
-		})
-	})
+    try {
+        const nuevoProducto = await Productos.create({
+            nombre: req.body.nombre,
+            descripcion: req.body.descripcion,
+            caracteristica: req.body.caracteristica,
+            precio: req.body.precio,
+            stock: req.body.stock,
+            rutaImagen: req.body.rutaImagen,
+            destacado: req.body.destacado
+        })
+        console.log(nuevoProducto);
+        res.render("agregar-producto", { 
+            mensaje: "Producto agregado",
+            titulo: "Agregar producto"
+        });
+    } catch (error) {
+        console.log('[ERROR]' + error);
+    };    
+};
 
+const editarProductoGET = async (req, res) => {
+    const idProducto = req.params.id
 
-}
+    try {
+        const productoFind = await Productos.findOne({ 
+            where: {
+                id: idProducto
+            } 
+        })
 
-const editarProductoGET = (req, res) => {
-    const id = req.params.id
-    const data = req.body
-    const sql = " SELECT * FROM productos WHERE idProducto = ?";
-    db.query(sql, id, (err, data) => {
-        if(err) throw err
-        if(data.length > 0){
-            res.render('editar-producto', {
-                titulo: "Vista del administrador",
-                productos: data[0]
-            });
-        } else {
-            console.log('ID no encontrado')
+        if( !productoFind ) {
             res.send(`
-                <h1>No existe el producto con id ${id}</h1>
+                <h1>No existe el producto con id ${idProducto}</h1>
                 <a href="/admin"> Ver listado de productos</a>
             `)
+        } else {
+            res.render('editar-producto', {
+                titulo: "Vista del administrador",
+                productos: productoFind
+            });    
         };
-    });
+    } catch (error) {
+        console.log(error)
+    };
 };
 
-const editarProductoPOST = (req, res) => {
-    const id = req.params.id;
+const editarProductoPOST = async (req, res) => {
+    const idProducto = req.params.id;
     const producto = req.body;
-    console.log(producto);
-    const sql = "UPDATE productos SET ? WHERE idProducto = ?";
-
-    db.query(sql, [producto, id], (err, data) => {
-        if(err) throw err
-        console.log(data);
-        console.log(`${data.affectedRows} Registro Actualizado`);
+    
+    try {
+        const nuevoProducto = await Productos.update({
+            nombre: producto.nombre,
+            descripcion: producto.descripcion,
+            caracteristica: producto.caracteristica,
+            precio: producto.precio,
+            stock: producto.stock,
+            rutaImagen: producto.rutaImagen,
+            destacado: producto.destacado
+        }, 
+        {
+            where: { id: idProducto }
+        })
+        console.log('SE MODIFICO CORRECTAMENTE')
+        // console.log(nuevoProducto);
         res.redirect('/admin');
-    });
+    } catch (error) {
+        console.log('[ERROR]' + error);
+    };
 };
 
-const borrarProductoGET = (req, res) => {
-    const id = req.params.id
+const borrarProductoGET = async (req, res) => {
+    const idProducto = req.params.id
 
-    const sql = "DELETE FROM productos WHERE idProducto = ?";
-    db.query(sql, id, (err, data) => {
-        if(err) throw err
-        console.log(data.affectedRows + "Registro borrado")
-        res.redirect('/admin');
+    const productoDelete = await Productos.destroy({
+        where: {
+            id: idProducto
+        }
     });
+    console.log('PRODUCTO ELIMINADO');
+    // res.send('Producto eliminado')
+    res.redirect('/admin');
 };
 
 

@@ -8,6 +8,7 @@ const routesFront = require('./routes/front');
 const routesBack = require('./routes/back');
 require('./views/helpers/helpers');
 const {PORT} = require('./config');
+const sequelize = require('./models/connection');
 
 const port = PORT;
 
@@ -50,4 +51,12 @@ app.use((req, res) => {
 
 app.listen(port, () => {
     console.log(`Servido escuchando en el puerto ${port}`);
+
+    sequelize.sync({ force: false})
+        .then(() => {
+            console.log('Nos conectamos a la base de datos correctamente')
+        })
+        .catch(err => {
+            console.log('Se ha producido un error al conectar la base de datos ' + err)
+        })
 });
