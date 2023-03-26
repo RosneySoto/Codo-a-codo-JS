@@ -34,7 +34,11 @@ const editarProductoGET = async (req, res) => {
     const idProducto = req.params.id
 
     try {
-        const productoFind = await Productos.findOne({ where: {id: idProducto} })
+        const productoFind = await Productos.findOne({ 
+            where: {
+                id: idProducto
+            } 
+        })
 
         if( !productoFind ) {
             res.send(`
@@ -42,7 +46,6 @@ const editarProductoGET = async (req, res) => {
                 <a href="/admin"> Ver listado de productos</a>
             `)
         } else {
-            // res.send(productoFind)
             res.render('editar-producto', {
                 titulo: "Vista del administrador",
                 productos: productoFind

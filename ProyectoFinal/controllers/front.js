@@ -31,7 +31,7 @@ const contactoGET = (req, res) => {
 
 const productosGET = async (req, res) => {
 
-    const allProductos  = await modelProducto.findAll();
+    const allProductos  = await Productos.findAll();
     res.render('productos', {
         titulo: 'Mi pagina web',
         productos: allProductos 
