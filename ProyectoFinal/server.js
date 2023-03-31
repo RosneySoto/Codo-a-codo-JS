@@ -13,8 +13,8 @@ const port = PORT;
 
 //Sesiones mediante cookies
 app.use(session({
-    secret: 'jose',
-    resave: false,
+    secret: process.env.SECRET_SESSION,
+    resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 300000 } // 5 minutos
 }));

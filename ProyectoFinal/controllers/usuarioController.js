@@ -1,5 +1,4 @@
 require('dotenv').config();
-const bcrypt = require('bcrypt');
 const {Cuentas, Productos} = require('../models/productoDB');
 const { encrypt, compare } = require('../middleware/bcrypt-middle');
 
@@ -56,6 +55,13 @@ const loginUsuarioPOST = async (req, res) => {
     };
 };
 
+const deslogueoUsuario = (req, res) => {
+    req.session.destroy(err => {
+        if(!err) res.redirect('/login')
+        else res.send({status: 'Logout ERROR', body: err});
+    });
+};
+
 const registroUsuarioGET = (req, res) => {
     res.render('registro', {
         titulo: "Sign In"
@@ -91,6 +97,7 @@ module.exports = {
     adminGET,
     loginUsuarioGET,
     loginUsuarioPOST,
+    deslogueoUsuario,
     registroUsuarioGET,
     registroUsuarioPOST
 }

@@ -1,5 +1,4 @@
 require('dotenv').config();
-const db = require('../models/connection');
 const {Cuentas, Productos} = require('../models/productoDB');
 
 const agregarProductoGET = (req, res) => {
@@ -11,20 +10,24 @@ const agregarProductoGET = (req, res) => {
 const agregarProductoPOST = async (req, res) => {
 
     try {
-        const nuevoProducto = await Productos.create({
-            nombre: req.body.nombre,
-            descripcion: req.body.descripcion,
-            caracteristica: req.body.caracteristica,
-            precio: req.body.precio,
-            stock: req.body.stock,
-            rutaImagen: req.body.rutaImagen,
-            destacado: req.body.destacado
-        })
-        console.log(nuevoProducto);
-        res.render("agregar-producto", { 
-            mensaje: "Producto agregado",
-            titulo: "Agregar producto"
-        });
+        if(req.session.logueado === true) {
+            const nuevoProducto = await Productos.create({
+                nombre: req.body.nombre,
+                descripcion: req.body.descripcion,
+                caracteristica: req.body.caracteristica,
+                precio: req.body.precio,
+                stock: req.body.stock,
+                rutaImagen: req.body.rutaImagen,
+                destacado: req.body.destacado
+            })
+            console.log(nuevoProducto);
+            res.render("agregar-producto", { 
+                mensaje: "Producto agregado",
+                titulo: "Agregar producto"
+            });
+        } else {
+            res.redirect('/login')
+        };
     } catch (error) {
         console.log('[ERROR]' + error);
     };    
