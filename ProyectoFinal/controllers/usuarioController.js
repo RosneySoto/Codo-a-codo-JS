@@ -37,6 +37,7 @@ const loginUsuarioPOST = async (req, res) => {
             if (checkPassword) {
                 req.session.logueado = true; //Se crea al iniciar sesion, si no se inicia sesion no se crea.
                 req.session.usuario = usuario;
+                console.log(req.session);
                 res.redirect('/admin');
             } else {
                 res.render('login', {

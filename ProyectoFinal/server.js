@@ -2,21 +2,30 @@ const express = require('express');
 const app = express();
 const hbs = require('hbs')
 const path = require('path');
-const session = require('express-session')
 const routesFront = require('./routes/front');
 const routesBack = require('./routes/back');
 require('./views/helpers/helpers');
 const {PORT} = require('./config');
-const sequelize = require('./models/connection');
+const sequelizeConnection = require('./models/connection');
+// const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const SessionStore = require('express-session-sequelize')(session.Store);
 
 const port = PORT;
 
-//Sesiones mediante cookies
+
+const sequelizeSessionStore = new SessionStore({
+    db: sequelizeConnection
+})
+
+//Session
+// app.use(cookieParser());
 app.use(session({
     secret: process.env.SECRET_SESSION,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 300000 } // 5 minutos
+    store: sequelizeSessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 60000} // 1 minuto
 }));
 
 app.use(express.json());
@@ -46,7 +55,7 @@ app.use((req, res) => {
 app.listen(port, () => {
     console.log(`Servido escuchando en el puerto ${port}`);
 
-    sequelize.sync({ force: false})
+    sequelizeConnection.sync({ force: false})
         .then(() => {
             console.log('Nos conectamos a la base de datos correctamente')
         })
