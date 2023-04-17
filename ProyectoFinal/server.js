@@ -19,7 +19,7 @@ const sequelizeSessionStore = new SessionStore({
 })
 
 //Session
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(session({
     secret: process.env.SECRET_SESSION,
     store: sequelizeSessionStore,
