@@ -7,7 +7,7 @@ const routesBack = require('./routes/back');
 require('./views/helpers/helpers');
 const {PORT} = require('./config');
 const sequelizeConnection = require('./models/connection');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const SessionStore = require('express-session-sequelize')(session.Store);
 
