@@ -5,6 +5,11 @@ const { agregarProductoGET, editarProductoGET, agregarProductoPOST, editarProduc
 const { adminGET, loginUsuarioGET, loginUsuarioPOST, registroUsuarioGET, registroUsuarioPOST, deslogueoUsuario } = require('../controllers/usuarioController');
 const passport = require('../middleware/passport');
 
+const { mostrarCarrito, addCarrito, eliminarDelCarrito, checkout } = require('../controllers/ordenController');
+
+const { addProductoCarrito, viewCarrito, deleteProductoCarrtito } = require('../controllers/carritoController');
+
+
 router.get('/admin', adminGET);
 
 router.get('/agregar-producto', agregarProductoGET);
@@ -19,9 +24,17 @@ router.get('/login', loginUsuarioGET);
 router.post('/login', loginUsuarioPOST);
 router.get('/logout', deslogueoUsuario);
 
-router.get('/registro', registroUsuarioGET)
-router.post('/registro', registroUsuarioPOST)
+router.get('/registro', registroUsuarioGET);
+router.post('/registro', registroUsuarioPOST);
 
+// router.get('/orden', mostrarCarrito);
+// router.post('/agregar-a-carrito', addCarrito);
+// router.post('/remover-del-carrito', eliminarDelCarrito);
+// router.post('/checkout', checkout);
+
+router.get('/carrito', viewCarrito);
+router.post('/carrito/:id', addProductoCarrito);
+router.delete('/carrito/:id', deleteProductoCarrtito);
 
 
 module.exports = router;

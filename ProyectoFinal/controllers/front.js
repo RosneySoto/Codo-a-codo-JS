@@ -1,7 +1,8 @@
 require('dotenv').config();
 const db = require('../models/connection');
 const nodemailer = require('nodemailer');
-const {Cuentas, Productos} = require('../models/productoDB');
+const {Productos} = require('../models/productoDB');
+const {Cuentas} = require('../models/cuentaDB');
 
 const indexGET = async (req, res) => {
     const products  = await Productos.findAll();

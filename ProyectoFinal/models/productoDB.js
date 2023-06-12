@@ -39,24 +39,6 @@ Productos.init({
 });
 
 
-class Cuentas extends Model {};
-
-Cuentas.init({
-    usuario: {
-        type: DataTypes.STRING(60),
-        allowNull: false
-    },
-    password: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    }
-}, {
-    sequelize,
-    modelName: 'cuentas',
-    timestamps: true,
-});
-
 module.exports = {
-    Productos,
-    Cuentas
+    Productos
 };

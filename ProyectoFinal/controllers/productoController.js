@@ -1,5 +1,6 @@
 require('dotenv').config();
-const {Cuentas, Productos} = require('../models/productoDB');
+const {Productos} = require('../models/productoDB');
+const {Cuentas} = require('../models/cuentaDB');
 
 const agregarProductoGET = (req, res) => {
 
