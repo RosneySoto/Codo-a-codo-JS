@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -14,15 +15,17 @@
     "axios": "^1.2.2",
     "bcrypt": "^5.1.0",
     "bootstrap-icons": "^1.10.3",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "express-session-sequelize": "^2.3.0",
     "hbs": "^4.2.0",
-    "memorystore": "^1.6.7",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.9.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^6.29.1"
+    "sequelize": "^6.29.1",
+    "twilio": "^4.10.0"
   }
 }
