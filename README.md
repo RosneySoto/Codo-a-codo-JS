@@ -12,7 +12,7 @@ En cuanto a la base de datos, use Clever Cloup desde la nube.
 
 Puedes registrarte o acceder a la app con los siguinetes datos:
 
-Usuario: admin5@test.com
+Usuario: admin6@test.com
 Password: 123
 
 La aplacion esta deployada en vivo en railway con el siguinte link:
