@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use(session({
     secret: process.env.SECRET_SESSION,
     store: sequelizeSessionStore,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: { maxAge: 60000} // 1 minuto
 }));
 

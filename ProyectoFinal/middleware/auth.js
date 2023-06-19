@@ -1,22 +1,29 @@
 const jwt = require('jsonwebtoken');
 
 const tokenSign = async (usuario) => {
-    return jwt.sign(
-        {
-            id: usuario.id,
-            usuario: usuario.usuario,
-            // expiresIn: process.env.JWT_EXPIRE,
-            expiresIn: Date.now() + 60 * 1000,
-        },
-        process.env.SECRET_KEY
-    )
-}
+    try {
+        let token = jwt.sign(
+            {
+                id: usuario.id,
+                usuario: usuario.usuario,
+                // expiresIn: process.env.JWT_EXPIRE,
+                expiresIn: Date.now() + 60 * 1000,
+            },
+            process.env.SECRET_KEY
+        )
+        return token;
+    } catch (error) {
+        console.log('[ERROR EN LA FIRMA DEL TOKEN] ' + error);
+    };
+};
 
 const tokenVerify = async (token) => {
     try {
-        return jwt.verify(token, process.env.SECRET_KEY)
+        let tokenVerificado = jwt.verify(token, process.env.SECRET_KEY);
+        return tokenVerificado;
     } catch (error) {
-        return null
+        console.log('[ERROR EN LA VERIFICACION DEL TOKEN] ' + error);
+        return error;
     };
 };
 

@@ -50,8 +50,7 @@ const loginUsuarioPOST = async (req, res) => {
         const checkPassword = await compare(clave, usuarioValidado.password);
 
         /* TOKEN */
-        const tokenSession = await tokenSign(usuario);
-        console.log(tokenSession);
+        const tokenSession = await tokenSign(usuarioValidado);
 
         if (usuario || clave) {
 

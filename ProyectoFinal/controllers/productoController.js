@@ -1,18 +1,33 @@
 require('dotenv').config();
 const {Productos} = require('../models/productoDB');
 const {Cuentas} = require('../models/cuentaDB');
+const {tokenVerify, tokenSign} = require('../middleware/auth');
 
-const agregarProductoGET = (req, res) => {
+const agregarProductoGET = async (req, res) => {
 
     try {
-        if(req.session.logueado === true){
-            res.render('agregar-producto', {
-                titulo: "Agregar producto"
-            });
+        if( req.session.logueado === true ) {
+
+            const token = req.headers.authorization.split(' ')[1];   
+            const tokenData = await tokenVerify(token);
+            
+            if(Date.now() < tokenData.expiresIn ){
+                return res.status(200).send({
+                    titulo: 'Agregar Productos',
+                    message: 'Estas en la vista de agregar productos'
+                });
+                // res.render('agregar-producto', {
+                //     titulo: "Agregar producto"
+                // });
+            } else {
+                return res.status(401).send({error: 'ERROR TOKEN EXPIRADO O NO VALIDO'});
+            }
         } else {
-            res.redirect('/login');
+            // res.redirect('/login');
+            return res.status(401).send({ error: 'DEBE INICIAR SECION' })
         }
     } catch (error) {
+        res.status(500).send({ error: 'ERROR NO TIENE AUTORIZACION' })
         console.log('[ERROR]' + error);
     };
 };
