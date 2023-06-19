@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const hbs = require('hbs')
 const path = require('path');
-const session = require('express-session')
 const routesFront = require('./routes/front');
 const routesBack = require('./routes/back');
 require('./views/helpers/helpers');
