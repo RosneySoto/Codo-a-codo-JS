@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use(session({
     secret: process.env.SECRET_SESSION,
     store: sequelizeSessionStore,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     cookie: { maxAge: 60000} // 1 minuto
 }));
 
@@ -55,7 +55,7 @@ app.use((req, res) => {
 app.listen(port, () => {
     console.log(`Servido escuchando en el puerto ${port}`);
 
-    sequelizeConnection.sync({ force: false})
+    sequelizeConnection.sync({ force: false}) // Con la propiedad "force: true" obligo a que borre las tablas y las cree de nuevo
         .then(() => {
             console.log('Nos conectamos a la base de datos correctamente')
         })

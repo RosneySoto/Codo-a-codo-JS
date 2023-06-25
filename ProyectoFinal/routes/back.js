@@ -7,7 +7,7 @@ const passport = require('../middleware/passport');
 
 const { mostrarCarrito, addCarrito, eliminarDelCarrito, checkout } = require('../controllers/ordenController');
 
-const { addProductoCarrito, viewCarrito, deleteProductoCarrtito } = require('../controllers/carritoController');
+const { addProductoCarrito, viewCarrito, deleteProductoCarrtito, obtenerContenidoCarrito } = require('../controllers/carritoController');
 
 
 router.get('/admin', adminGET);
@@ -33,6 +33,7 @@ router.post('/registro', registroUsuarioPOST);
 // router.post('/checkout', checkout);
 
 router.get('/carrito', viewCarrito);
+router.get('/vista-carrito', obtenerContenidoCarrito);
 router.post('/carrito/:id', addProductoCarrito);
 router.delete('/carrito/:id', deleteProductoCarrtito);
 

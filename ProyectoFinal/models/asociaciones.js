@@ -1,6 +1,8 @@
-const cuentaDB = require('./cuentaDB');
-const productoDB = require('./productoDB');
-const ordenDB = require('./ordenDB');
+const { Cuentas } = require('./cuentaDB');
+const { Productos } = require('./productoDB');
+const { Carritos } = require('./carritoDB');
 
-cuentaDB.belongsToMany(ordenDB, {through: 'cuenta_orden'});
-ordenDB.belongsTo(cuentaDB, {through: 'orden_cuenta'})
+Carritos.belongsTo(Productos, { foreignKey: 'idProducto', as: 'productos' });
+Productos.hasMany(Carritos, { foreignKey: 'idProducto', as: 'carrito' });
+
+module.exports = { Carritos, Productos };

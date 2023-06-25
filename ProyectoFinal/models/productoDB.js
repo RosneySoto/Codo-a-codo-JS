@@ -4,6 +4,12 @@ const sequelize = require('./connection');
 class Productos extends Model { };
 
 Productos.init({
+    idProducto: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+    },
     nombre: {
         type: DataTypes.STRING,
         allowNull: false
