@@ -45,24 +45,7 @@ const addProductoCarrito = async (req, res) => {
   } catch (error) {
     console.error('Error al agregar artículo al carrito:', error);
     res.status(500).json({ error: 'Ocurrió un error al agregar el artículo al carrito' });
-  }
-
-  // try {
-  //     const productoFind = await Productos.findOne({
-  //         where: {
-  //             id: productoId
-  //         }
-  //     })
-  //     if(!productoFind){ 
-  //         res.status(401).send('NO EXISTE EL PRODUCTO SELECCIONADO');
-  //     } else {
-  //         carritoCompras.push({productoFind})
-  //         res.status(201).send({carritoCompras})
-  //     }
-
-  // } catch (error) {
-  //     console.log('[ERROR]' + error)
-  // }
+  };
 };
 
 async function obtenerContenidoCarrito(req, res) {
